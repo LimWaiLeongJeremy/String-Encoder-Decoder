@@ -8,8 +8,8 @@ public class App {
     public static void main(String[] args) {
         Boolean sessionEnd = false;
 
-        // Letting user select to encode or decode text.
-        // While session have not end app will keep asking for function to run.
+        // Letting user select encode or decode text.
+        // While session have not end, app will keep asking for function to run.
         while (!sessionEnd) { 
             Scanner selectionScanner = new Scanner(System.in);
             System.out.print(
@@ -18,14 +18,14 @@ public class App {
 
             // after function have been selected, app will ask for user text to encode/decode before ending the session.
             if (selection.equals("e") | selection.equals("E")) {
-                System.out.println("You have choosen 'Encoding'");
+                System.out.println("You have chosen 'Encoding'");
                 Scanner plainTextScanner = new Scanner(System.in);
                 System.out.print("Please key in your text: ");
                 String plainText = plainTextScanner.nextLine();
                 encoder(plainText);
                 sessionEnd = true;
             } else if (selection.equals("d") | selection.equals("D")) {
-                System.out.println("You have choosen 'Decoding'");
+                System.out.println("You have chosen 'Decoding'");
                 Scanner encodedTextScanner = new Scanner(System.in);
                 System.out.print("Please key in your text: ");
                 String encodedText = encodedTextScanner.nextLine();
@@ -43,7 +43,7 @@ public class App {
     private static void encoder(String plainText) {
         List<Integer> encodedInt = new ArrayList<>();
 
-        // I check for the charater's ASCII number and adjust accdingly.
+        // Check for the charater's ASCII number and adjust accdingly.
         for (int i = 0; i < plainText.length(); i++) {
             if ((int) plainText.charAt(i) >= 41 && (int) plainText.charAt(i) <= 47 |
                 (int) plainText.charAt(i) >= 49 && (int) plainText.charAt(i) <= 57 |
@@ -65,14 +65,14 @@ public class App {
         for (int encoded : encodedInt) {
             result.append((char) encoded);
         }
-        System.out.println(result);
+        System.out.println("Encoded text: " + result);
 
     }
 
     private static void decoder(String encodedText) {
         List<Integer> decodedInt = new ArrayList<>();
 
-        // I check for the charater's ASCII number and adjust accdingly.
+        // Check for the charater's ASCII number and adjust accdingly.
         for (int i = 0; i < encodedText.length(); i++) {
             if ((int) encodedText.charAt(i) >= 40 && (int) encodedText.charAt(i) <= 46 |
                 (int) encodedText.charAt(i) >= 48 && (int) encodedText.charAt(i) <= 56 |
@@ -94,7 +94,7 @@ public class App {
         for (int encoded : decodedInt) {
             result.append((char) encoded);
         }
-        System.out.println(result);
+        System.out.println("Decoded text: " + result);
 
     }
 
