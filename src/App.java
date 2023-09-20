@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Scanner;
 
 // This is a CLI applicataion all interaction will be done in the CLI.
+// I have provided 2 Solution, solution 1 from line 12 to 137 and solution 2 from line 144 to 242.
+// Please command/uncommand respective block to test, thank you! 
 public class App {
 
     // **** Soluton 1 ****
@@ -23,8 +25,12 @@ public class App {
 
     public static void main(String[] args) {
         Boolean sessionEnd = false;
+
+        // Initializing reference and offset table
         initTable();
 
+        // Letting user select encode or decode text.
+        // While session have not end, app will keep asking for function to run.
         try (Scanner selectionScanner = new Scanner(System.in)) {
             while (!sessionEnd) {
                 System.out.print(
@@ -65,9 +71,11 @@ public class App {
 
     }
 
+
     private static String encoder(String plainText) {
         List<String> encodedText = new ArrayList<>();
 
+        // Comparing plain text charater to the table and returning offset value
         for (int i = 0; i < plainText.length(); i++) {
             char charater = plainText.charAt(i);
             String charAsString = String.valueOf(charater);
@@ -98,8 +106,8 @@ public class App {
 
     private static String decoder(String encodedText) {
         List<String> decodedText = new ArrayList<>();
-        // int decoderOffset = baseOffsetValue;
 
+        // Comparing plain text charater to the table and returning offset value
         for (int i = 0; i < encodedText.length(); i++) {
             char charater = encodedText.charAt(i);
             String charAsString = String.valueOf(charater);
@@ -149,7 +157,8 @@ public class App {
     //                 try (Scanner plainTextScanner = new Scanner(System.in)) {
     //                     System.out.print("Please key in your text: ");
     //                     String plainText = plainTextScanner.nextLine();
-    //                     encoder(plainText);
+    //                     System.out.println("Encoded text: " + encoder(plainText));
+                        
     //                 }
     //                 sessionEnd = true;
     //             } else if (selection.equals("d") | selection.equals("D")) {
@@ -157,7 +166,7 @@ public class App {
     //                 try (Scanner encodedTextScanner = new Scanner(System.in)) {
     //                     System.out.print("Please key in your text: ");
     //                     String encodedText = encodedTextScanner.nextLine();
-    //                     decoder(encodedText);
+    //                     System.out.println("Decoded text: " + decoder(encodedText));
     //                 }
     //                 sessionEnd = true;
     //             } else {
@@ -170,7 +179,7 @@ public class App {
 
     // }
 
-    // private static void encoder(String plainText) {
+    // private static String encoder(String plainText) {
     //     List<Integer> encodedInt = new ArrayList<>();
 
     //     // Offset value B
@@ -197,11 +206,11 @@ public class App {
     //     for (int encoded : encodedInt) {
     //         result.append((char) encoded);
     //     }
-    //     System.out.println("Encoded text: " + result);
+    //     return result.toString();
 
     // }
 
-    // private static void decoder(String encodedText) {
+    // private static String decoder(String encodedText) {
     //     List<Integer> decodedInt = new ArrayList<>();
 
     //     // Offset value B
@@ -228,7 +237,7 @@ public class App {
     //     for (int encoded : decodedInt) {
     //         result.append((char) encoded);
     //     }
-    //     System.out.println("Decoded text: " + result);
+    //     return result.toString();
 
     // }
 
