@@ -12,11 +12,11 @@ public class App {
                             "U", "V", "W", "X", "Y", 
                             "Z", "0", "1", "2", "3", 
                             "4", "5", "6", "7", "8", 
-                            "9", "\\(", "\\)", "*", 
+                            "9", "(", ")", "*", 
                             "+", ",", "-", ".", "/" };
     static Map<Integer, String> referenceTable = new HashMap<>();    
     static Map<Integer, String> offsetTable = new HashMap<>();
-    static int offsetValue = 5;
+    static int baseOffsetValue = 1;
 
     public static void main(String[] args) {
         Boolean sessionEnd = false;
@@ -34,14 +34,14 @@ public class App {
                 Scanner plainTextScanner = new Scanner(System.in);
                 System.out.print("Please key in your text: ");
                 String plainText = plainTextScanner.nextLine();
-                encoder(plainText);
+                System.out.println(encoder(plainText));
                 sessionEnd = true;
             } else if (selection.equals("d") | selection.equals("D")) {
                 System.out.println("You have chosen 'Decoding'");
                 Scanner encodedTextScanner = new Scanner(System.in);
                 System.out.print("Please key in your text: ");
                 String encodedText = encodedTextScanner.nextLine();
-                decoder(encodedText);
+                System.err.println(decoder(encodedText));
                 sessionEnd = true;
             } else {
                 System.out.println("You have input an invalid selection, please try again.");
@@ -53,15 +53,69 @@ public class App {
     private static void initTable() {
         for (int i = 0; i < charaters.length; i++) {
             referenceTable.put(i, charaters[i]);
-            offsetTable.put(i + offsetValue, charaters[i]);
+            offsetTable.put(i + baseOffsetValue, charaters[i]);
         }
 
     }
 
-    private static void encoder(String plainText) {
+    private static String encoder(String plainText) {
+        List<String> encodedText = new ArrayList<>();
+        
+        for (int i = 0; i < plainText.length(); i++) {
+            char charater = plainText.charAt(i);
+            String charAsString = String.valueOf(charater);
+            for (Map.Entry<Integer, String> entry : referenceTable.entrySet()) {
+                int key = entry.getKey();
+                String value = entry.getValue();
+                int offsetValue = key - baseOffsetValue;
+                if (offsetValue < 0) {
+                    offsetValue = referenceTable.size() - baseOffsetValue;
+                }
+                if (charAsString.contains(value)) {
+                    encodedText.add(referenceTable.get(offsetValue));
+                    break;
+                } else if (key >= 43){
+                    encodedText.add(charAsString);
+                } 
+                
+            }
+            
+        }
+        // Build the string and print it out in console.
+        StringBuilder result = new StringBuilder();
+        for (String encoded : encodedText) {
+            result.append(encoded);
+        }
+        return String.valueOf(result);
     }
 
-    private static void decoder(String encodedText) {
+    private static String decoder(String encodedText) {
+        List<String> decodedText = new ArrayList<>();
+        // int decoderOffset = baseOffsetValue;
+        
+        for (int i = 0; i < encodedText.length(); i++) {
+            char charater = encodedText.charAt(i);
+            String charAsString = String.valueOf(charater);
+            for (Map.Entry<Integer, String> entry : referenceTable.entrySet()) {
+                int key = entry.getKey();
+                String value = entry.getValue();
+                int offsetValue = key + baseOffsetValue;
+                if (charAsString.contains(value)) {
+                    decodedText.add(offsetTable.get(offsetValue));
+                    break;
+                } else if (key >= 43){
+                    decodedText.add(charAsString);
+                } 
+                
+            }
+            
+        }
+        // Build the string and print it out in console.
+        StringBuilder result = new StringBuilder();
+        for (String encoded : decodedText) {
+            result.append(encoded);
+        }
+        return String.valueOf(result);
     }
 
     
